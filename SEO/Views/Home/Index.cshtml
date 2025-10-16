@@ -1,8 +1,30 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model CustomerModel
+@{
+	ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+	<h1 class="display-4">Welcome</h1>
+	<p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+
+
+<form asp-controller="Home" method="post" asp-action="Edit">
+
+	<dl>
+		<dt>
+			<label asp-for="FormFile"></label>
+		</dt>
+		<dd>
+			<input asp-for="FormFile" name="FormFile" type="file" />
+			<span asp-validation-for="FormFile"></span>
+		</dd>
+	</dl>
+	<div class="row">
+		<div class="col-md-12">
+			<button type="submit" class="btn btn-info">ذخیره</button>
+		</div>
+
+	</div>
+</form>

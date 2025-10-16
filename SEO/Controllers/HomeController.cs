@@ -18,6 +18,11 @@ namespace SEO.Controllers
             return View();
         }
 
+        public IActionResult Converter()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

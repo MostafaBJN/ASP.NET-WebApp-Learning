@@ -1,0 +1,53 @@
+﻿@* @model AppFile *@
+
+@* @{ *@
+@*     ViewData["Title"] = "Converter"; *@
+@* } *@
+
+@* <h1>Converter</h1> *@
+
+@* <h4>Program</h4> *@
+@* <hr /> *@
+@* <div class="row"> *@
+@*     <div class="col-md-4"> *@
+@*         <form enctype="multipart/form-data" method="post"> *@
+@*             <dl> *@
+@*                 <dt> *@
+@*                     <label asp-for="FormFile"></label> *@
+@*                 </dt> *@
+@*                 <dd> *@
+@*                     <input asp-for="FormFile" type="file" /> *@
+@*                     <span asp-validation-for="FormFile"></span> *@
+@*                 </dd> *@
+@*             </dl> *@
+@*             <input asp-controller="Converter" asp-action="Upload" class="btn" type="submit" value="Upload" /> *@
+@*         </form> *@
+@*     </div> *@
+@* </div> *@
+
+@* <div> *@
+@*     <a asp-action="Index">Back to List</a> *@
+@* </div> *@
+
+@* @section Scripts { *@
+@*     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");} *@
+@* } *@
+
+
+
+<form asp-action="upload" asp-controller="Converter" enctype="multipart/form-data">
+	<div class="row">
+		<div class="col-md-6">انتخاب فایل</div>
+		<div class="col-md-6">
+			<input type="file" id="uploadFile" name="UploadFile" />
+
+		</div>
+		<div class="col-md-12">
+			<button type="submit" class="btn btn-primary">آپلود</button>
+		</div>
+	</div>
+
+</form>
+
+
+
