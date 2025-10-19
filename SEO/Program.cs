@@ -1,5 +1,5 @@
-using SEO;
 using SEO.Controllers;
+using SEO.Logic;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +30,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-ConvertHTML.StartCovering();
 
 app.Run();
 

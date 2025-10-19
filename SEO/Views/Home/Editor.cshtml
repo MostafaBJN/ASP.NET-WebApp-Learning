@@ -1,0 +1,228 @@
+﻿<!DOCTYPE html>
+<button id="saveBtn">Save</button>
+<button id="loadBtn">Load</button>
+<div id="editorjs"></div>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/editorjs@@latest"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/codex.editor.header@@2.0.4/dist/bundle.js"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/table@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/header@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/link@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/checklist@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/embed@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/quote@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/inline-code@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/warning@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/code@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/marker@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/underline@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/delimiter@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/paragraph@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/list@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/raw@@latest"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/@@editorjs/image@@latest"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/simple-image@@latest"></script>
+
+dfs<b>something important</b>ds
+
+<script>
+
+            const data = {
+        "time": 1760869267013,
+        "blocks": [
+            {
+                "id": "SmoOFj12hx",
+                "type": "paragraph",
+                "data": {
+                    "text": "testing para"
+                }
+            },
+            {
+                "id": "3ixwwM0yz2",
+                "type": "header",
+                "data": {
+                    "text": "headddd2",
+                    "level": 1
+                }
+            },
+            {
+                "id": "ykORO8kdKg",
+                "type": "delimiter",
+                "data": {}
+            },
+            {
+                "id": "1QEvM8CAag",
+                "type": "warning",
+                "data": {
+                    "title": "warningtitle",
+                    "message": "warnignmesage"
+                }
+            },
+            {
+                "id": "jBkoFesn1N",
+                "type": "delimiter",
+                "data": {}
+            },
+            {
+                "id": "zPDBo6U0VB",
+                "type": "quote",
+                "data": {
+                    "text": "quate",
+                    "caption": "ca[ption",
+                    "alignment": "center"
+                }
+            },
+            {
+                "id": "5yi2cl6_H-",
+                "type": "table",
+                "data": {
+                    "withHeadings": true,
+                    "stretched": true,
+                    "content": [
+                        [
+                            "tablehwead1",
+                            "head2"
+                        ],
+                        [
+                            "row1COL1",
+                            "ROW1COL2"
+                        ]
+                    ]
+                }
+            },
+            {
+                "id": "1cxGuC59b0",
+                "type": "checklist",
+                "data": {
+                    "items": [
+                        {
+                            "text": "CHECKLIST",
+                            "checked": true
+                        },
+                        {
+                            "text": "SECOND",
+                            "checked": false
+                        },
+                        {
+                            "text": "THIRD",
+                            "checked": true
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "M3x1w-XkG5",
+                "type": "raw",
+                "data": {
+                    "html": "rawhtml<b>fsddsfdf</b> <i>fgsfsdf</i>fdsfedf"
+                }
+            },
+            {
+                "id": "FfVqsr2-8G",
+                "type": "header",
+                "data": {
+                    "text": "head5",
+                    "level": 5
+                }
+            },
+            {
+                "id": "uxXEPaHamt",
+                "type": "Code",
+                "data": {
+                    "code": "gghjhj\nghffgh\ngfhfg\n\\n\n\\nn\n\\n\\n\nn\\n\\n"
+                }
+            }
+        ],
+        "version": "2.31.0"
+    }
+
+    const editor = new EditorJS({
+            holder: 'editorjs',
+            tools: {
+              header: Header,
+              image: SimpleImage,
+              checklist:Checklist,
+              //list: List,
+              raw: RawTool,
+              quote: Quote,
+              Code: CodeTool,
+              warning: Warning,
+              Marker: Marker,
+              delimiter:Delimiter,
+              underline:Underline,
+              paragraph:Paragraph,
+              inlineCode:InlineCode,
+              table: Table
+            },
+            data: {
+                "time": 1760861783417,
+                "blocks": [
+                    {
+                        "id": "bAlykX5RZ6",
+                        "type": "paragraph",
+                        "data": {
+                            "text": "i am trying to say thing in my name"
+                        }
+                    },
+                    {
+                        "id": "bAlykX5Rx6",
+                        "type" : "paragraph",
+                        "data" : {
+                            "text" : "The example of text that was written in <b>one of popular</b> text editors."
+                        }
+                    },
+                    {
+                        "id": "bAlykX5Rw6",
+                        "type" : "header",
+                        "data" : {
+                            "text" : "With the header of course",
+                            "level" : 2
+                        }
+                    },
+                    {
+                        "id": "bAlykX5Rq6",
+                        "type" : "paragraph",
+                        "data" : {
+                            "text" : "So what do we have?"
+                        }
+                    }
+                ],
+                "version": "2.31.0"
+            }
+    })
+
+    editor.isReady
+      .then(() => {
+        console.log('Editor.js is ready to work!')
+        /** Do anything you need after editor initialization */
+      })
+      .catch((reason) => {
+        console.log(`Editor.js initialization failed because of ${reason}`)
+      });
+
+    const saveBtn = document.getElementById("saveBtn");
+    const loadBtn = document.getElementById("loadBtn");
+
+    saveBtn.addEventListener("click", () => {
+        editor.save().then((outputData) => {
+            console.log('Article data: ', outputData)
+        }).catch((error) => {
+            console.log('Saving failed: ', error)
+        });
+    })
+
+
+    @using System.IO;
+    @{
+        var file = File.ReadAllText($"SelectedHTML.html");
+    }
+    loadBtn.addEventListener("click", () => {
+        if (editor) {
+            editor.blocks.renderFromHTML("@file");
+            editor.save().then(data => {
+                console.log(data)
+                console.log(JSON.stringify(data))
+            })
+        }
+    })
+
+</script>
