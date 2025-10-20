@@ -1,6 +1,3 @@
-using SEO.Controllers;
-using SEO.Logic;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

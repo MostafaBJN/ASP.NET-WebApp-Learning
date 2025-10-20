@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
-
-namespace SEO.Models
+﻿namespace SEO.Models
 {
     public class AppFile
     {
@@ -12,7 +8,7 @@ namespace SEO.Models
         }
         public int Id { get; set; }
         public IFormFile UploadFile { get; set; }
-      
+
 
     }
 

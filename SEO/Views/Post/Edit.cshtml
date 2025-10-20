@@ -1,0 +1,93 @@
+﻿@model SEO.Models.Post
+@{
+}
+
+<!-- include EditorJS and tools in _Layout or here -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/editorjs@@latest/dist/editor.css" />
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/editorjs@@latest"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/codex.editor.header@@2.0.4/dist/bundle.js"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/table@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/header@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/link@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/checklist@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/embed@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/quote@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/inline-code@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/warning@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/code@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/marker@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/underline@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/delimiter@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/paragraph@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/list@@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/raw@@latest"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/@@editorjs/image@@latest"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/simple-image@@latest"></script>
+
+<h2>@Model.Title</h2>
+
+<div id="editorjs"></div>
+
+<input type="hidden" id="postId" value="@Model.Id" />
+<input type="text" id="postTitle" value="@Model.Title" />
+
+<button id="saveBtn">Save</button>
+
+<script>
+    // Parse server-saved JSON or null
+    var savedData = null;
+    @if (!string.IsNullOrEmpty(Model.EditorDataJson))
+    {
+        <text>
+            savedData = @Html.Raw(Model.EditorDataJson);
+        </text>
+    }
+
+    const editor = new EditorJS({
+      holder: 'editorjs',
+      autofocus: true,
+      data: savedData,
+      tools: {
+        header: Header,
+        image: SimpleImage,
+        checklist:Checklist,
+        //list: List,
+        raw: RawTool,
+        quote: Quote,
+        Code: CodeTool,
+        warning: Warning,
+        Marker: Marker,
+        delimiter:Delimiter,
+        underline:Underline,
+        paragraph:Paragraph,
+        inlineCode:InlineCode,
+        table: Table
+        // image: {
+        //   class: ImageTool,
+        //   config: {
+        //     //configure uploader or use external URL
+        //     endpoints: { byFile: '/api/uploadFile', byUrl: '/api/fetchUrl' }
+        //   }
+        //}
+      }
+    });
+
+    document.getElementById('saveBtn').addEventListener('click', function () {
+      editor.save().then((outputData) => {
+        var json = JSON.stringify(outputData);
+        fetch('@Url.Action("Save", "Post")', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+          body: 'id=' + encodeURIComponent(document.getElementById('postId').value)
+                + '&title=' + encodeURIComponent(document.getElementById('postTitle').value)
+                + '&editorJson=' + encodeURIComponent(json)
+        }).then(r => r.json()).then(resp => {
+          if (resp.success) alert('Saved');
+          else alert('Save failed: ' + resp.message);
+        });
+      }).catch((error) => {
+        console.error('Saving failed', error);
+        alert('Save failed: ' + error);
+      });
+    });
+</script>

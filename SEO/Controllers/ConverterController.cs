@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
-using System;
-using NuGet.Protocol;
-using SEO.Models;
-using System.Text;
-using HtmlAgilityPack;
 using SEO.Logic;
+using SEO.Models;
 
 namespace SEO.Controllers
 {
@@ -27,7 +22,7 @@ namespace SEO.Controllers
         {
             var f = model.UploadFile;
 
-            if(f == null)
+            if (f == null)
                 return View("Converter");
 
             string html = f.ReadAsString();//Added Extention Methode
