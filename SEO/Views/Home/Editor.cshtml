@@ -1,4 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@using System.IO;
+@using System.Text
+@using System.Net
+@{
+    var file = File.ReadAllText($"Block.json");
+    //byte[] encodedBytes = Encoding.GetEncoding(targetEncoding).GetBytes(text); // simulate incoming bytes
+    // string fromCp1252 = Encoding.GetEncoding(Encoding.UTF8.CodePage).GetString(file);
+    // string decoded = WebUtility.HtmlDecode(fromCp1252);
+    // string decoded = WebUtility.HtmlDecode(htmlEncoded);
+}
+
+<!DOCTYPE html>
 <button id="saveBtn">Save</button>
 <button id="loadBtn">Load</button>
 <div id="editorjs"></div>
@@ -22,7 +33,6 @@
 <!--<script src="https://cdn.jsdelivr.net/npm/@@editorjs/image@@latest"></script>-->
 <script src="https://cdn.jsdelivr.net/npm/@@editorjs/simple-image@@latest"></script>
 
-dfs<b>something important</b>ds
 
 <script>
 
@@ -135,6 +145,10 @@ dfs<b>something important</b>ds
         "version": "2.31.0"
     }
 
+
+    const obj = @Html.Raw(file);
+    console.log(obj)
+
     const editor = new EditorJS({
             holder: 'editorjs',
             tools: {
@@ -153,41 +167,7 @@ dfs<b>something important</b>ds
               inlineCode:InlineCode,
               table: Table
             },
-            data: {
-                "time": 1760861783417,
-                "blocks": [
-                    {
-                        "id": "bAlykX5RZ6",
-                        "type": "paragraph",
-                        "data": {
-                            "text": "i am trying to say thing in my name"
-                        }
-                    },
-                    {
-                        "id": "bAlykX5Rx6",
-                        "type" : "paragraph",
-                        "data" : {
-                            "text" : "The example of text that was written in <b>one of popular</b> text editors."
-                        }
-                    },
-                    {
-                        "id": "bAlykX5Rw6",
-                        "type" : "header",
-                        "data" : {
-                            "text" : "With the header of course",
-                            "level" : 2
-                        }
-                    },
-                    {
-                        "id": "bAlykX5Rq6",
-                        "type" : "paragraph",
-                        "data" : {
-                            "text" : "So what do we have?"
-                        }
-                    }
-                ],
-                "version": "2.31.0"
-            }
+            data: obj
     })
 
     editor.isReady
@@ -210,19 +190,16 @@ dfs<b>something important</b>ds
         });
     })
 
-
-    @using System.IO;
-    @{
-        var file = File.ReadAllText($"SelectedHTML.html");
-    }
-    loadBtn.addEventListener("click", () => {
-        if (editor) {
-            editor.blocks.renderFromHTML("@file");
-            editor.save().then(data => {
-                console.log(data)
-                console.log(JSON.stringify(data))
-            })
-        }
-    })
+  
+    // loadBtn.addEventListener("click", () => {
+    //     if (editor) {
+    //         editor.blocks.render("@file");
+    //         editor.save().then(data => {
+    //             console.log(data)
+    //             JSON.parse("@file");
+    //             console.log(JSON.stringify(data))
+    //         })
+    //     }
+    // })
 
 </script>

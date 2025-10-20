@@ -2,8 +2,11 @@
 using System.Net;
 using System.Reflection.Metadata;
 using System.Text;
+using System.Xml.Linq;
+using Fizzler.Systems.HtmlAgilityPack;
 using HtmlAgilityPack;
 using NuGet.Packaging;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SEO.Logic
 {
@@ -251,28 +254,35 @@ namespace SEO.Logic
 
         public void CustomizeContent(HtmlDocument document)
         {
-            //var body = document.DocumentNode.SelectSingleNode("//body");
-            ////body.SelectNodes("@h2");
-            //var lastH2 = body.QuerySelector("h2:last-child");
+            StyleQA(document);
 
-            //int i = 0;
-            //for (var par = lastH2.NextSibling; par != null; par = par.NextSibling, i++)
-            //{
-            //    if(i % 2 == 0)
-            //    {
-            //        par.InnerHtml = QAStyle(par.InnerHtml
-            //    }
-
-            //}
-            //return;
+            return;
         }
 
-        private string QAStyle(string text, int q)
+        private void StyleQA(HtmlDocument document)
         {
-            var sb = new StringBuilder();
-            sb.Append(text);
-            sb.Append(text);
-            return sb.ToString();
+            var lastH2 = document.DocumentNode.SelectSingleNode("//h2[last()]");
+            var qaList = lastH2.ElementsAfterSelf().ToList();
+
+            int i = 0;
+            while (i < qaList.Count)
+            {
+                var detailNode = HtmlNode.CreateNode("<details></details>");
+
+                var questionNode = qaList[i++];
+
+                string question = questionNode.InnerHtml.Trim();
+                detailNode.AppendChild(HtmlNode.CreateNode($"<summary>{question}</summary>"));
+
+                var answerNode = qaList[i++];
+
+                string answer = answerNode.InnerHtml.Trim();
+                detailNode.AppendChild(HtmlNode.CreateNode($"<p>{answer}</p>"));
+
+                questionNode.ParentNode.InsertBefore(detailNode, questionNode);
+                questionNode.Remove();
+                answerNode.Remove();
+            }
         }
 
         public string ChangeTextEncoding(string text)
@@ -297,7 +307,7 @@ namespace SEO.Logic
 
         public void ConvertToBlocks(HtmlDocument document)
         {
-
+            SaveLoad.Save(new HtmlToEditorJsConverter().Convert(document.DocumentNode.InnerHtml), "Block.json");
         }
 
 
