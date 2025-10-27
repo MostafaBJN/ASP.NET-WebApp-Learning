@@ -13,14 +13,19 @@ namespace SEO.Logic
     public class ConvertHTML
     {
         public string FileName(string identifier = "") => $"ChangedHTML{identifier}.html";
-        public bool changeEncoding = true;
+        //public bool changeEncoding = true;
         public int targetEncoding = Encoding.UTF8.CodePage;
-        public int currentEncoding = Encoding.UTF8.CodePage;
+        //public int currentEncoding = Encoding.UTF8.CodePage;
         public HtmlDocument Document { get; } = new HtmlDocument();
 
         public ConvertHTML(string html)
         {
-            Document.LoadHtml(html);
+            var text = WebUtility.HtmlDecode(html);
+            var currentEncoding = 1252;
+            byte[] encodedBytes = Encoding.GetEncoding(targetEncoding).GetBytes(text); // simulate incoming bytes
+            string fromCp1252 = Encoding.GetEncoding(targetEncoding).GetString(encodedBytes);
+            var text2 = WebUtility.HtmlEncode(fromCp1252);
+            Document.LoadHtml(text2);
         }
 
         readonly Dictionary<string, HashSet<string>> AllowedAttributesByTag = new(StringComparer.OrdinalIgnoreCase)
@@ -55,6 +60,7 @@ namespace SEO.Logic
 
         public void CleanContent(HtmlDocument document)
         {
+
             //Remove all <head> content and tag from htmlDoc
             var headNode = document.DocumentNode.SelectSingleNode("//head");
             if (headNode != null)
@@ -68,52 +74,52 @@ namespace SEO.Logic
             var htmlBody = document.DocumentNode.SelectSingleNode("//body");
             if (htmlBody == null)
                 htmlBody = document.DocumentNode;
-            try
-            { currentEncoding = document.Encoding.CodePage; }
-            catch
-            { }
-            //Change Only if Document Has Different Encoding
-            changeEncoding = !(currentEncoding == targetEncoding);
+            //try
+            //{ currentEncoding = document.Encoding.CodePage; }
+            //catch
+            //{ }
+            ////Change Only if Document Has Different Encoding
+            //changeEncoding = !(currentEncoding == targetEncoding);
             ChangeElement(htmlBody);
         }
 
-        private void ChangeElement(HtmlNode node)
+        public void ChangeElement(HtmlNode node)
         {
             if (node.NodeType != HtmlNodeType.Element) return;
 
             var tag = node.Name;
 
-            #region CHANGE ENCODING
+            //#region CHANGE ENCODING
 
-            ///////////////////////////////////////////////////////////////////
-            
+            /////////////////////////////////////////////////////////////////////
 
-            if (!string.IsNullOrEmpty(node.InnerText))
-            {
-                //TODO Check for a better aprouch (not changing the encoding of all InnerHtml)
-                if (tag == "span")
-                    node.InnerHtml = ChangeTextEncoding(node.InnerHtml);
-            }
+            ////if (!changeEncoding)
+            //    if (!string.IsNullOrEmpty(node.InnerText))
+            //    {
+            //        //TODO Check for a better aprouch (not changing the encoding of all InnerHtml)
+            //        if (tag == "span")
+            //            node.InnerHtml = ChangeTextEncoding(node.InnerHtml);
+            //    }
 
-            #endregion
+            //#endregion
 
 
-            #region REMOVE ATTRIBUTES
+            //#region REMOVE ATTRIBUTES
 
-            AllowedAttributesByTag.TryGetValue(tag, out var allowed);
-            var allowedSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-            if (allowed != null)
-                allowedSet.AddRange(allowed);
-            allowedSet.AddRange(globalAllowed);
-            // Remove attributes not in allowedSet
-            var attrs = node.Attributes.Select(a => a.Name).ToArray();
-            foreach (var attrName in attrs)
-            {
-                if (!allowedSet.Contains(attrName))
-                    node.Attributes.Remove(attrName);
-            }
+            //AllowedAttributesByTag.TryGetValue(tag, out var allowed);
+            //var allowedSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            //if (allowed != null)
+            //    allowedSet.AddRange(allowed);
+            //allowedSet.AddRange(globalAllowed);
+            //// Remove attributes not in allowedSet
+            //var attrs = node.Attributes.Select(a => a.Name).ToArray();
+            //foreach (var attrName in attrs)
+            //{
+            //    if (!allowedSet.Contains(attrName))
+            //        node.Attributes.Remove(attrName);
+            //}
 
-            #endregion
+            //#endregion
 
 
             foreach (var child in node.ChildNodes)
@@ -254,7 +260,7 @@ namespace SEO.Logic
 
         public void CustomizeContent(HtmlDocument document)
         {
-            StyleQA(document);
+            //StyleQA(document);
 
             return;
         }
@@ -285,25 +291,26 @@ namespace SEO.Logic
             }
         }
 
-        public string ChangeTextEncoding(string text)
-        {
+        //public string ChangeTextEncoding(string text)
+        //{
 
-            if (!changeEncoding)
-                return text;
+        //    //if (!changeEncoding)
+        //    //    return text;
 
-            byte[] encodedBytes = Encoding.GetEncoding(targetEncoding).GetBytes(text); // simulate incoming bytes
-            string fromCp1252 = Encoding.GetEncoding(targetEncoding).GetString(encodedBytes);
-            string decoded = WebUtility.HtmlDecode(fromCp1252);
+        //    //byte[] encodedBytes = Encoding.GetEncoding(targetEncoding).GetBytes(text); // simulate incoming bytes
+        //    //string fromCp1252 = Encoding.GetEncoding(targetEncoding).GetString(encodedBytes);
+        //    string decoded = WebUtility.HtmlEncode(text);
+        //    string decoded1 = WebUtility.HtmlDecode(text);
 
-            Console.WriteLine(decoded);
-            //System.Windows.Show("Stackoverflow");
-            Debug.WriteLine(decoded);
+        //    Console.WriteLine(decoded);
+        //    //System.Windows.Show("Stackoverflow");
+        //    Debug.WriteLine(decoded);
 
-            // is this gonna work? what is WebUtility.HtmlDecode?
-            //string decoded = Encoding.UTF8.GetString(cp1252Bytes);
+        //    // is this gonna work? what is WebUtility.HtmlDecode?
+        //    //string decoded = Encoding.UTF8.GetString(cp1252Bytes);
 
-            return decoded;
-        }
+        //    return decoded;
+        //}
 
         public void ConvertToBlocks(HtmlDocument document)
         {

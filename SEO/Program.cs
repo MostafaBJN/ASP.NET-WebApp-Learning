@@ -1,6 +1,19 @@
+using Microsoft.EntityFrameworkCore;
+using SEO.Data;
+using Microsoft.AspNetCore.Identity;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var connectionString = builder.Configuration.GetConnectionString("SEOContext");
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(connectionString));
+
+//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<SEOIdentityContext>();
+
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
